@@ -4,17 +4,17 @@ import * as Yup from 'yup';
 
 const LoginSchema = Yup.object().shape({
   nome: Yup.string().required('Required'),
-  idade: Yup.number().required('Required').min(17, 'Too short!'),
-  cpf: Yup.string().required('Required').min(11, 'Too short!'), //000.000.000-00
-  matricula: Yup.string().required('Required').min(9, 'A matrícula deve ser de tamanho 9!').max(9, 'A matrícula deve ser de tamanho 9!'), //201080303
+  idade: Yup.number().required('Required').min(17, 'Over 16!'),
+  cpf: Yup.string().required('Required').min(14, 'CPF must be size 14! (999.999.999-99)').max(14, 'CPF must be size 14! (999.999.999-99)').matches(/^[0-9\s\.\-]*$/,'CPF can only contain numbers, dash and dot. (999.999.999-99)'),
+  matricula: Yup.string().required('Required').min(9, 'Matrícula must be size 9!').max(9, 'Matrícula must be size 9!').matches(/^[0-9\s]*$/, 'Can only contain numbers.'), //201080303 f
   curso: Yup.string().required('Required'),
   endereco: Yup.string().required('Required'),
-  numero: Yup.number(),
+  numero: Yup.string(),
   complemento: Yup.string(),
   bairro: Yup.string().required('Required'),
   cidade: Yup.string().required('Required'),
-  estado: Yup.string().required('Required'), // Fazer uma lista das UF's - XX
-  cep: Yup.string().required('Required') //00000-000
+  estado: Yup.string().required('Required'),
+  cep: Yup.string().required('Required').min(9, 'CEP must be size 9! (00000-000)').max(9, 'CEP must be size 9! (00000-000)').matches(/^[0-9\s\-]*$/, 'Can only contain numbers and dash. (00000-000)')
 });
 
 const FormYupValidation = () => {
@@ -67,7 +67,7 @@ const FormYupValidation = () => {
           <br/><br/>
           <label>
             Matrícula*:
-            <Field type="number" name="matricula"
+            <Field type="text" name="matricula"
                    onBlur={handleBlur}
                    onChange={handleChange}/>
           </label>
@@ -123,9 +123,35 @@ const FormYupValidation = () => {
           <br/><br/>
           <label>
             Estado*:
-            <Field type="text" name="estado"
-                   onBlur={handleBlur}
-                   onChange={handleChange}/>
+            <Field as="select" name="color" onBlur={handleBlur}  onChange={handleChange}>
+             <option value="rondonia">RO</option>
+             <option value="acre">AC</option>
+             <option value="amazonas">AM</option>
+             <option value="roraima">RR</option>
+             <option value="para">PA</option>
+             <option value="amapa">AP</option>
+             <option value="tocantis">TO</option>
+             <option value="maranhao">MA</option>
+             <option value="piaui">PI</option>
+             <option value="ceara">CE</option>
+             <option value="norte">RN</option>
+             <option value="paraiba">PB</option>
+             <option value="prenambuco">PE</option>
+             <option value="alagoas">AL</option>
+             <option value="sergipe">SE</option>
+             <option value="bahia">BA</option>
+             <option value="minas">MG</option>
+             <option value="espirito">ES</option>
+             <option value="rio">RJ</option>
+             <option value="saopaulo">SP</option>
+             <option value="parana">PR</option>
+             <option value="santacatarina">SC</option>
+             <option value="sul">RS</option>
+             <option value="matogrossosul">MS</option>
+             <option value="matogrossonorte">MT</option>
+             <option value="goias">GO</option>
+             <option value="distrito">DF</option>
+           </Field>
           </label>
           <ErrorMessage name="estado" className="error" component="span"/>
           <br/><br/>
